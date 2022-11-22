@@ -4,7 +4,7 @@
 module.exports = {
   testMatch: [
     '**/src/**/(*.)+(spec|test).[t]s?(x)',
-    '!**/cypress/**/*.(spec|test).ts',
+    '!**/cypress-e2e/**/*.(spec|test).ts',
     '!**/lib/**/*.*',
     '!**/instrumented/**/*.*',
   ],
@@ -20,12 +20,16 @@ module.exports = {
   moduleFileExtensions: ['ts', 'js'],
   clearMocks: true,
   coverageDirectory: 'reports/coverage-jest',
-  coverageReporters: ['text', 'lcov', 'cobertura', 'json'],
+  coverageReporters: ['lcov', 'cobertura', 'json'],
   setupFilesAfterEnv: ['./jest.setup.js'],
+  // https://github.com/istanbuljs/nyc/issues/1302
+  coverageProvider: 'v8',
+
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
     'src/*.{ts,tsx}',
-    'index.ts',
+    '!src/**/*.types.ts',
+    '!src/**/types.ts',
     '!**/lib/**',
     '!src/cypress/**',
     '!**/node_modules/**',

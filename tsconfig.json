@@ -16,8 +16,12 @@
     "types": ["node", "cypress"]
   },
   "include": [
-    "src", "docs", "README.md", "cypress", "cypress.config.ts", "*.js",
-
-    "node_modules/jest-test-each/dist/index.d.ts",
+    "src",
+    "docs",
+    "README.md",
+    "cypress-e2e",
+    "cypress.config.ts",
+    "*.js",
+    "node_modules/jest-test-each/dist/index.d.ts"
   ]
 }

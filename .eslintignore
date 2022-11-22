@@ -1,2 +1,9 @@
 .eslintrc.js
 /instrumented/
+/reports
+/plugins
+/setup
+/commands
+/lib
+index.d.ts
+index.js

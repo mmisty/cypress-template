@@ -7,7 +7,7 @@
 /coverage
 /package
 /.nyc_output
-/cypress/videos
-/cypress/downloads
-/cypress/screenshots
+/cypress-e2e/videos
+/cypress-e2e/downloads
+/cypress-e2e/screenshots
 /reports

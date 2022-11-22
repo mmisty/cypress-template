@@ -21,9 +21,6 @@
   "exclude": [
     "src/*.test.ts",
     "src/**/*.test.ts",
-    "src/tests",
-    "node_modules/jest/**/*",
-    "build/**/*",
-    "e2e/**/*"
+    "src/tests"
   ]
 }

@@ -53,42 +53,45 @@ try {
     fs.rmSync(coverageFullDir, {recursive: true});
   }
 
-  const dirs = fs.readdirSync(coveragePath);
-
-  const copyCovFiles = () => {
-    if (dirs.length < 1) {
-      throw new Error(`No coverage found in ${coveragePath}`);
-    }
-
-    dirs.forEach(covDir => {
-      const entry = path.resolve(coveragePath, covDir);
-      const coverageFinal = path.resolve(entry, 'coverage-final.json');
-
-      if (fs.lstatSync(entry).isFile()) {
-        fs.rmSync(entry);
-        return;
+  if(fs.existsSync(coveragePath)){
+  
+    const dirs = fs.readdirSync(coveragePath);
+  
+    const copyCovFiles = () => {
+      if (dirs.length < 1) {
+        throw new Error(`No coverage found in ${coveragePath}`);
       }
-
-      if (!fs.existsSync(coverageFinal)) {
-        throw new Error(`File doesn't exist ${coverageFinal}`);
-      }
-
-      const toFile = path.resolve(coveragePath, `coverage-final-${covDir}.json`);
-
-      console.log(`   Copy file to: ${toFile}`);
-      fs.copyFileSync(coverageFinal, toFile);
-    });
-  };
-
-  copyCovFiles();
-  const reportCmd = `npx nyc report --reporter lcov --reporter html -t ${coverageFullDir} --report-dir ${coverageFullDir} --check-coverage false`;
-
-  exec.execSync(`npx nyc merge ${coveragePath} ${coverageFullFile}`);
-
-  console.log(`   Report command: ${reportCmd}`);
-  exec.execSync(reportCmd);
-
-  console.log('Cypress coverage merged successfully!');
+    
+      dirs.forEach(covDir => {
+        const entry = path.resolve(coveragePath, covDir);
+        const coverageFinal = path.resolve(entry, 'coverage-final.json');
+      
+        if (fs.lstatSync(entry).isFile()) {
+          fs.rmSync(entry);
+          return;
+        }
+      
+        if (!fs.existsSync(coverageFinal)) {
+          throw new Error(`File doesn't exist ${coverageFinal}`);
+        }
+      
+        const toFile = path.resolve(coveragePath, `coverage-final-${covDir}.json`);
+      
+        console.log(`   Copy file to: ${toFile}`);
+        fs.copyFileSync(coverageFinal, toFile);
+      });
+    };
+  
+    copyCovFiles();
+    const reportCmd = `npx nyc report --reporter lcov --reporter html -t ${coverageFullDir} --report-dir ${coverageFullDir} --check-coverage false`;
+  
+    exec.execSync(`npx nyc merge ${coveragePath} ${coverageFullFile}`);
+  
+    console.log(`   Report command: ${reportCmd}`);
+    exec.execSync(reportCmd);
+  
+    console.log('Cypress coverage merged successfully!');
+  }
 } catch (err) {
   err.message = `Could not merge coverage report!
   
@@ -104,10 +107,21 @@ try {
 }
 
 console.log('Merge cypress and jest...');
+if(!fs.existsSync(outDir)){
+  fs.mkdirSync(outDir);
+}
 
-exec.execSync(
-  `istanbul-merge --out ${outDir}/coverage.json ${jestDir}/coverage-final.json ${coverageFullDir}/coverage.json`,
-);
-exec.execSync(`istanbul report --include ${outDir}/coverage.json --dir ${outDir} lcov`);
+const cyCov = `${coveragePath}/coverage-final-cypress.json`;
+const jestCov = `${jestDir}/coverage-final.json`;
+
+if(fs.existsSync(cyCov)){
+  fs.copyFileSync(cyCov, `${outDir}/coverage-cy.json`);
+}
+
+if(fs.existsSync(jestCov)){
+  fs.copyFileSync(jestCov, `${outDir}/coverage-jest.json`);
+}
+
+exec.execSync(`npx nyc report --report-dir ${outDir} --check-coverage false --temp-dir ${outDir}`);
 
 console.log('Success!');
