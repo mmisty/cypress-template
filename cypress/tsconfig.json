@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "strict": true,
+    "target": "es2015",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["node", "cypress"],
+    "baseUrl": "./",
+    "paths": {
+      "cy-local": ["../src"],
+      "cy-local/*": ["../src/"]
+    }
+  },
+  "include": ["./"]
+}

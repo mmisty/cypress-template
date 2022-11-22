@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2015",
+    "declaration": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "lib",
+    "importsNotUsedAsValues": "error",
+    "types": ["node", "cypress"]
+  },
+  "include": [
+    "src", "docs", "README.md", "cypress", "cypress.config.ts", "*.js",
+
+    "node_modules/jest-test-each/dist/index.d.ts",
+  ]
+}

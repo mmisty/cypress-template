@@ -1,0 +1,75 @@
+{
+  "name": "cypress-template",
+  "version": "0.0.1",
+  "main": "./lib/index",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "repository": "git@github.com:mmisty/cypress-template.git",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "cypress",
+    "html",
+    "e2e",
+    "tests"
+  ],
+  "author": "Taisia Pitko (mmisty) <minydas@yandex.ru>",
+  "scripts": {
+    "fmt": "pretty-quick",
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "tsc": "tsc --project tsconfig.build.json",
+    "cov:check": "npx nyc check-coverage",
+    "cy:open": "$(npm bin)/cypress open",
+    "cy:open:cov": "CYPRESS_COVERAGE=true npm run cy:open",
+    "cy:run": "$(npm bin)/cypress run",
+    "cy:run:cov": "rm -rf .nyc_output && rm -rf coverage && CYPRESS_COVERAGE=true npm run cy:run",
+    "cov:merge": "node .bin/merge-coverage.js --out 'reports/coverage-full' --cypress 'reports/coverage-cypress' --jest 'reports/coverage-jest'",
+    "lint": "eslint --fix --ext .js,.ts .",
+    "cov": "http-server ./reports/coverage-full/lcov-report",
+    "cov:cy": "http-server ./reports/coverage-cypress/cypress/lcov-report",
+    "cov:jest": "http-server ./reports/coverage-jest/lcov-report",
+    "pre": "rm -rf lib && npm run tsc && npm run test:cov && npm run cy:run:cov && npm run cov:merge && npm run cov:check",
+    "extract": "node .scripts/extract.js  --source lib --target . --package package.json",
+    "prepublishOnly": "npm run pre && npm run extract"
+  },
+  "browser": {},
+  "peerDependencies": {
+    "cypress": ">10.x.x"
+  },
+  "devDependencies": {
+    "@cypress/code-coverage": "^3.10.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@types/jest": "^29.2.3",
+    "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.33.1",
+    "@typescript-eslint/parser": "^5.33.1",
+    "cypress": "^10.10.0",
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest": "^27.1.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "istanbul": "^0.4.5",
+    "istanbul-merge": "^1.1.1",
+    "jest": "^29.3.1",
+    "jest-test-each": "^0.9.1",
+    "nyc": "^15.1.0",
+    "prettier": "~2.0.5",
+    "pretty-quick": "^3.0.0",
+    "ts-jest": "^29.0.3",
+    "tslib": "^2.0.1",
+    "tsutils": "~3.17.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "esbuild-loader": "^2.19.0",
+    "path-browserify": "^1.0.1",
+    "tsconfig-package": "npm:tsconfig@^7.0.0",
+    "tsconfig-paths-webpack-plugin": "^4.0.0",
+    "webpack": "^5.73.0",
+    "yargs": "^17.6.2"
+  }
+}

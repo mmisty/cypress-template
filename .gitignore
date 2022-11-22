@@ -1,0 +1,13 @@
+/.idea
+/node_modules
+.DS_Store
+/dist
+/lib
+/instrumented
+/coverage
+/package
+/.nyc_output
+/cypress/videos
+/cypress/downloads
+/cypress/screenshots
+/reports
