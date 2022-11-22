@@ -22,7 +22,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build
-      run: |
-        npm ci
-        npm pre
+    - name: Install
+      run: npm ci
+        
+    - name: Built
+      run: npm pre
