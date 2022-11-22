@@ -26,4 +26,4 @@ jobs:
       run: npm ci
         
     - name: Built
-      run: npm pre
+      run: npm run pre
