@@ -40,7 +40,7 @@
     "cov": "http-server ./reports/coverage-full/lcov-report",
     "cov:cy": "http-server ./reports/coverage-cypress/cypress/lcov-report",
     "cov:jest": "http-server ./reports/coverage-jest/lcov-report",
-    "pre": "rm -rf lib reports instrumented && npm run lint && npm run tsc && npm run test:cov && npm run cy:run:cov && npm run cov:merge && npm run cov:check",
+    "pre": "rm -rf lib reports instrumented && npm run fmt && npm run lint && npm run tsc && npm run test:cov && npm run cy:run:cov && npm run cov:merge && npm run cov:check",
     "extract": "node .scripts/extract.js  --source lib --target . --package package.json",
     "prepublishOnly": "npm run pre && npm run extract"
   },
@@ -59,6 +59,7 @@
     "esbuild-loader": "^2.19.0",
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^27.1.5",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.2",

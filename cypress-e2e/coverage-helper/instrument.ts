@@ -34,7 +34,7 @@ export const instrumentSync = (srcDir: string, destDir: string, cyCoveragePath: 
     }
 
     // eslint-disable-next-line no-console
-    console.log(`Success`);
+    console.log('Success');
   } catch (scriptErr) {
     (scriptErr as Error).message = `Could not instrument '${srcDir}' to ${destDir}: ${(scriptErr as Error).message}`;
     throw scriptErr;

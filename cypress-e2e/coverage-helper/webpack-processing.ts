@@ -107,6 +107,7 @@ export const webpackPreprocessor = () => async (file: FileObject): Promise<strin
   const opts = addEsbuildLoader(file, conf);
 
   debug('---- WEBPACK CONFIGURATION ---');
+
   try {
     debug(JSON.stringify(conf, null, '  '));
   } catch (e) {

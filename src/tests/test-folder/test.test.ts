@@ -7,7 +7,6 @@ describe('suite', () => {
     configureEnv(() => {
       // nothing
     }, {});
-
     expect(1).toEqual(1);
   });
 });

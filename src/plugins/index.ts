@@ -3,10 +3,9 @@ import PluginConfigOptions = Cypress.PluginConfigOptions;
 import { tasks } from './tasks';
 
 // this runs in node
-export const configureEnv = (on: PluginEvents, config: PluginConfigOptions): PluginConfigOptions => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const configureEnv = (on: PluginEvents, _config: PluginConfigOptions) => {
   // do setup with events and env, register tasks
   // register plugin events
   on('task', tasks);
-
-  return config;
 };
