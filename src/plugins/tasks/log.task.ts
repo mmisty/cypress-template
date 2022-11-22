@@ -1,13 +1,11 @@
-import type { TaskTypeWithArgs } from './types';
+import type { TaskType } from './types';
 
-export const logTask: TaskTypeWithArgs<string> = {
-  /**
-   * logs to node
-   * @param message
-   */
-  log: (message: string) => {
-    console.log(message);
+/**
+ * logs to node
+ * @param message
+ */
+export const logTask: TaskType<string> = (message: string) => {
+  console.log(message);
 
-    return null;
-  },
+  return null;
 };

@@ -7,7 +7,7 @@ const coverage = process.env.COVERAGE || process.env.CYPRESS_COVERAGE;
 const cwd = process.cwd();
 const instrumented = path.join(cwd, 'instrumented');
 const src = path.join(cwd, 'src');
-const tsConfigCoverage = `../tsconfig.cov.json`;
+const tsConfigCoverage = path.join(__dirname, `../tsconfig.cov.json`);
 const reportsPath = process.env.REPORTS_PATH || path.join(cwd, 'reports');
 const reports = path.join(`${reportsPath}/coverage-cypress`);
 
@@ -30,13 +30,12 @@ const registerCoverage = (on: Cypress.PluginEvents, config: Cypress.PluginConfig
     instrumentApp();
 
     const fs = require('fs');
-    coverageTsConfig = path.join(__dirname, tsConfigCoverage);
 
-    if (!fs.existsSync(coverageTsConfig)) {
-      throw new Error(`Tsconfig for coverage not exist: file ${coverageTsConfig}`);
+    if (!fs.existsSync(tsConfigCoverage)) {
+      throw new Error(`Tsconfig for coverage not exist: file ${tsConfigCoverage}`);
     }
 
-    console.log('Using tsconfig: ' + coverageTsConfig);
+    console.log('Using tsconfig: ' + tsConfigCoverage);
     config.env.COVERAGE = coverage;
 
     require('@cypress/code-coverage/task')(on, config);
