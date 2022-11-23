@@ -1,48 +1,45 @@
 {
   "name": "cypress-template",
   "version": "0.0.1",
-  "main": "./lib/index",
-  "types": "./lib/index.d.ts",
-  "files": [
-    "lib",
-    "commands/**",
-    "cypress-e2e/**",
-    "index.d.ts",
-    "index.js",
-    "plugins/**",
-    "setup/**"
-  ],
+  "main": "./index",
+  "types": "./index.d.ts",
+  "files": [],
   "repository": "git@github.com:mmisty/cypress-template.git",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
   "keywords": [
     "cypress",
-    "html",
     "e2e",
-    "tests"
+    "tests",
+    "typescript",
+    "template"
   ],
   "author": "Taisia Pitko (mmisty) <minydas@yandex.ru>",
   "scripts": {
+    "husky:install": "husky install",
+    "fmt": "pretty-quick --branch origin/main --staged",
     "lint": "eslint --fix '**/*.{ts,tsx,js}'",
-    "fmt": "pretty-quick",
+    "tsc": "tsc --project tsconfig.build.json",
     "test": "jest",
     "test:cov": "jest --coverage",
-    "tsc": "tsc --project tsconfig.build.json",
-    "husky:install": "husky install",
-    "cov:check": "npx nyc check-coverage",
     "cy:open": "$(npm bin)/cypress open",
     "cy:open:cov": "CYPRESS_COVERAGE=true npm run cy:open",
     "cy:run": "$(npm bin)/cypress run",
     "cy:run:cov": "CYPRESS_COVERAGE=true npm run cy:run",
     "cov:merge": "node .scripts/merge-coverage.js --out 'reports/coverage-full' --cypress 'reports/coverage-cypress' --jest 'reports/coverage-jest'",
     "instrument": "COVERAGE=true node .scripts/instrument.js --src './src' --dest './instrumented' --cypress 'reports/coverage-cypress'",
-    "cov": "http-server ./reports/coverage-full/lcov-report",
-    "cov:cy": "http-server ./reports/coverage-cypress/cypress/lcov-report",
     "cov:jest": "http-server ./reports/coverage-jest/lcov-report",
+    "cov:cy": "http-server ./reports/coverage-cypress/cypress/lcov-report",
+    "cov": "http-server ./reports/coverage-full/lcov-report",
+    "cov:check": "npx nyc check-coverage",
     "pre": "rm -rf lib reports instrumented && npm run fmt && npm run lint && npm run tsc && npm run test:cov && npm run cy:run:cov && npm run cov:merge && npm run cov:check",
     "extract": "node .scripts/extract.js  --source lib --target . --package package.json",
-    "prepublishOnly": "npm run pre && npm run extract"
+    "extract:undo": "npm run extract -- --undo",
+    "prepublishOnly": "npm run pre && npm run extract",
+    "prepack": "npm run pre && npm run extract",
+    "postpublish": "npm run extract:undo",
+    "postpack": "npm run extract:undo"
   },
   "browser": {},
   "peerDependencies": {
@@ -55,6 +52,7 @@
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
+    "chalk": "~2.0.0",
     "cypress": "^10.10.0",
     "esbuild-loader": "^2.19.0",
     "eslint": "^8.22.0",
