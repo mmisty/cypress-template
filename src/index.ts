@@ -1,3 +1,5 @@
 export const something = ()=> {
- // here
+  cy.window().then(t=> {
+    console.log('log in console after got win')
+  })
 }

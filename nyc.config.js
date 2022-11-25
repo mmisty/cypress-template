@@ -1,5 +1,5 @@
-const reportDir = process.env.COV_REPORT_DIR ?? 'coverage-nyc';
-const tempDir = process.env.COV_TEMP ?? 'reports/.nyc_output';
+const reportDir = process.env.COVERAGE_REPORT_DIR ?? 'coverage-nyc';
+const tempDir = process.env.COVERAGE_TEMP ?? 'reports/.nyc_output';
 
 module.exports = {
   "all": true,
