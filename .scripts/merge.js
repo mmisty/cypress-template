@@ -2,7 +2,10 @@
 const yargs = require("yargs");
 const path = require("path");
 const exec = require("child_process");
-const { existsSync, copyFileSync, mkdirSync, writeFileSync } = require("fs");
+const NYC = require('nyc');
+const istanbul = require('istanbul-lib-coverage');
+
+const { existsSync, mkdirSync, rmSync, writeFileSync, readFileSync} = require("fs");
 
 const argv = yargs(process.argv.slice(2))
   .options({
@@ -22,6 +25,12 @@ const argv = yargs(process.argv.slice(2))
     out: {
       type: 'string',
       demandOption: true,
+      default: 'reports/coverage-temp',
+      describe: `Path to final report`,
+    },
+    report: {
+      type: 'string',
+      demandOption: true,
       default: 'reports/coverage-full',
       describe: `Path to final report`,
     },
@@ -35,41 +44,84 @@ const argv = yargs(process.argv.slice(2))
 const jestDir = argv.jest;
 const cypressDir = argv.cypress;
 const outDir = path.resolve(argv.out);
-const reportDir = path.resolve(outDir);
+const reportDir = path.resolve(argv.report);
 
 const coveragePathCy = path.resolve(process.cwd(), cypressDir);
 const coveragePathJest = path.resolve(process.cwd(), jestDir);
 
-/**
- * Copies coverage-final.json to outDir and renames for further merge
- * @param fromDir directory with coverage-final.json
- * @param toFileName  file name to move to
- */
-const copy = (fromDir, toFileName) =>{
-  const fromFile = path.resolve(`${fromDir}/coverage-final.json`);
-  const toFile = path.resolve(outDir, toFileName);
-  
-  console.log(`   Copy file:${fromFile}\n\t\tto: ${toFile}`);
-  copyFileSync(fromFile, toFile);
+const removeDir = (dir) =>{
+  const pathResolved = path.resolve(dir)
+  if(existsSync(pathResolved)){
+    rmSync(pathResolved, {recursive: true});
+  }
 }
 
-/**
- * Execute command a log
- * @param cmd
- */
-const execute = (cmd) => {
-  console.log(cmd);
-  exec.execSync(cmd, { stdio: 'inherit'});
-  console.log('');
+const removeFile = (file) =>{
+  const fileResolved = path.resolve(file)
+  if(existsSync(fileResolved)){
+    rmSync(fileResolved);
+  }
 }
 
 console.log(' ======== MERGE COVERAGE REPORTS');
 
+removeDir(reportDir);
+removeDir(outDir);
+
 if(!existsSync(outDir)){
   mkdirSync(outDir)
 }
+const jestFinal = path.resolve(`${coveragePathJest}/coverage-final.json`);
+const cypressFinal = path.resolve(`${coveragePathCy}/coverage-final.json`);
 
-copy(coveragePathCy, `coverage-final-cypress.json`);
-copy(coveragePathJest, `coverage-final-jest.json`);
+function fixSourcePaths(coverage) {
+  Object.values(coverage).forEach((file) => {
+    const { path: absolutePath, inputSourceMap } = file
+    const fileName = /([^\/\\]+)$/.exec(absolutePath)[1]
+    if (!inputSourceMap || !fileName) return
+    
+    if (inputSourceMap.sourceRoot) inputSourceMap.sourceRoot = ''
+    inputSourceMap.sources = inputSourceMap.sources.map((source) =>
+      source.includes(fileName) ? absolutePath : source
+    )
+  })
+}
 
-execute(`nyc report -t ${outDir} --report-dir ${reportDir} --reporter=lcov`)
+function combineCoverage(tempDir, next) {
+  const fileToSave = `${tempDir}/out.json`
+  const coverage = existsSync(fileToSave)
+    ? JSON.parse(readFileSync(fileToSave, 'utf8'))
+    : {};
+  
+  fixSourcePaths(coverage)
+  
+  const previousCoverage = existsSync(next)
+    ? JSON.parse(readFileSync(next, 'utf8'))
+    : {}
+  
+  const coverageMap = istanbul.createCoverageMap(previousCoverage)
+  coverageMap.merge(coverage)
+  
+  writeFileSync(fileToSave, JSON.stringify(coverageMap, null, 2))
+  console.log('wrote coverage file %s', fileToSave)
+  
+  return null
+};
+const tempDir = path.resolve('reports/.nyc_output');
+const cypress = path.resolve(`reports/.nyc_output/out.json`);
+combineCoverage(outDir, cypress);
+combineCoverage(outDir, jestFinal);
+combineCoverage(outDir, cypress);
+combineCoverage(outDir, jestFinal);
+
+const nycReportOptions = {
+  reportDir: reportDir,
+  tempDir: outDir,
+  reporter: ['json', 'lcov', 'text'],
+};
+
+const nyc = new NYC(nycReportOptions)
+
+nyc.report().then(()=> {
+  console.log("Report created");
+})
