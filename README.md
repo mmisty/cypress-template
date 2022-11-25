@@ -16,7 +16,7 @@ Scripts
 |-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `husky:install` | install precommit hooks                                                                                                                                     |
 | `lint`          | lint code                                                                                                                                                   |
-| `build`         | compile typescript by [tsconfig.json](./tsconfig.json)                                                                                            |
+| `build`         | compile typescript by [tsconfig.build.json](./tsconfig.build.json)                                                                                            |
 | `test`          | run all jest tests                                                                                                                                          |
 | `test:cov`      | run all jest tests with coverage                                                                                                                            |
 | `cy:open`       | start cypress in interactive mode                                                                                                                           |
