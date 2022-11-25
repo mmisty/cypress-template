@@ -108,16 +108,21 @@ if (!isUndo && isHaveDuplicatedNames) {
   throw new Error(message);
 }
 
+if(!pack.files){
+  pack.files = [];
+}
+
 dirsOrFileList.forEach(d => {
-  if(!pack.files){
-    pack.files = [];
-  }
   if (!isUndo && !pack.files.includes(d.path)) {
     pack.files.push(d.path);
   }
 
   if (isUndo && pack.files.includes(d.path)) {
-    pack.files.splice(pack.files.indexOf(d.path), 1);
+      pack.files.splice(pack.files.indexOf(d.path), 1);
+      
+   if(pack.files.length === 0){
+     delete pack.files;
+   }
   }
 });
 
