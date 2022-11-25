@@ -13,14 +13,14 @@
     "report": "npm run cov:merge",
     "build": "tsc",
     "build:tests": "cd tests && tsc",
-    "build:cy": "cd cypress && tsc",
+    "build:cy": "cd integration && tsc",
     "build:all": "npm run build && npm run build:cy && npm run build:tests",
     "test:all": "npm run test:cov && npm run cy:run:cov",
     "cov:merge": "node ./.scripts/merge.js --cypress reports/coverage-cypress --jest reports/coverage-jest --out reports/coverage-full",
     "cov:report:show": "http-server reports/coverage-full/lcov-report",
     "cov:jest": "http-server reports/coverage-jest/lcov-report",
     "cov:cy": "http-server reports/coverage-cypress/lcov-report",
-    "all": "rm -rf lib reports .nyc_output && npm run build:all && npm run test:all && npm run report&& npm run cov:report:show"
+    "all": "rm -rf lib reports coverage-nyc .nyc_output && npm run build:all && npm run test:all && npm run report&& npm run cov:report:show"
   },
   "author": "",
   "license": "ISC",

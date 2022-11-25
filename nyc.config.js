@@ -5,7 +5,7 @@ module.exports = {
   "all": true,
   "reporter": ['json', 'lcov'],
   "include": ['**/src/**', '**/cypress/**/*.*', '**/*.ts', ],
-  "exclude": ['*.*', 'lib', 'tests', 'reports', 'cypress/e2e', 'cypress/plugins',  'cypress/*.*'],
+  "exclude": ['*.*', 'lib', 'js-files-cypress', 'tests', 'reports', 'cypress/e2e', 'cypress/plugins',  'cypress/*.*'],
   "sourceMap": false,
   "instrument": false,
   "report-dir": reportDir,

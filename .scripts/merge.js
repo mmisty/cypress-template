@@ -49,7 +49,7 @@ const copy = (fromDir, toFileName) =>{
   const fromFile = path.resolve(`${fromDir}/coverage-final.json`);
   const toFile = path.resolve(outDir, toFileName);
   
-  console.log(`   Copy file ${fromFile} to: ${toFile}`);
+  console.log(`   Copy file:${fromFile}\n\t\tto: ${toFile}`);
   copyFileSync(fromFile, toFile);
 }
 
