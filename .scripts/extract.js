@@ -109,6 +109,9 @@ if (!isUndo && isHaveDuplicatedNames) {
 }
 
 dirsOrFileList.forEach(d => {
+  if(!pack.files){
+    pack.files = [];
+  }
   if (!isUndo && !pack.files.includes(d.path)) {
     pack.files.push(d.path);
   }
