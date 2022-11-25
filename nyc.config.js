@@ -4,7 +4,7 @@ const tempDir = process.env.COVERAGE_TEMP ?? 'reports/.nyc_output';
 module.exports = {
   all: true,
   cache: false,
-  reporter: ['json', 'lcov', 'text'],
+  reporter: ['json', 'lcov', 'text', 'cobertura'],
   include: ['**/src/**', '**/cypress/**/*.*', '**/*.ts'],
   exclude: [
     '*.*',
