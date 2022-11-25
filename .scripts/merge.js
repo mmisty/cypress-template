@@ -136,4 +136,4 @@ clearDir(outDir);
 
 combineCoverage(outDir, `${cypress}/coverage-final.json`);
 combineCoverage(outDir, `${jest}/coverage-final.json`);
-createReport(outDir, reportDir, ['json', 'lcov', 'text', 'cobertura']);
+createReport(outDir, reportDir, ['json', 'lcov', 'text', 'cobertura', 'clover']);
