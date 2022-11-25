@@ -1,4 +1,4 @@
-import {checkCov} from "../src/utils";
+import { checkCov } from '../../src/utils';
 
 describe('suite', () => {
   it('test', () => {

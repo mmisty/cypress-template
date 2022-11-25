@@ -1,5 +1,5 @@
-import { defineConfig } from "cypress";
-import {setupPlugins} from "./integration/plugins";
+import { defineConfig } from 'cypress';
+import { setupPlugins } from './integration/plugins';
 
 const cypressFolder = 'integration';
 
@@ -12,11 +12,11 @@ export default defineConfig({
     fixturesFolder: `${cypressFolder}/fixtures`,
     screenshotsFolder: `${cypressFolder}/screenshots`,
     video: false,
-    
+
     setupNodeEvents(on, config) {
       setupPlugins(on, config);
-      
-      return config
+
+      return config;
     },
   },
 });

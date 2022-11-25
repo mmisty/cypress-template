@@ -1,17 +1,19 @@
-import {TsconfigPathsPlugin} from "tsconfig-paths-webpack-plugin";
+import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import path from 'path';
 
-export const preprocessor = ()=> {
-  const  wp = require("@cypress/webpack-preprocessor");
-  
+export const preprocessor = () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const wp = require('@cypress/webpack-preprocessor');
+
   const webpackOptions = {
     resolve: {
       extensions: ['.ts', '.js'],
-      plugins: [new TsconfigPathsPlugin({
-        configFile: path.resolve(__dirname,'../tsconfig.json')
-      })]
-    }
-    ,
+      plugins: [
+        new TsconfigPathsPlugin({
+          configFile: path.resolve(__dirname, '../tsconfig.json'),
+        }),
+      ],
+    },
     module: {
       rules: [
         {
@@ -19,25 +21,27 @@ export const preprocessor = ()=> {
           exclude: [/node_modules/],
           use: [
             {
-              loader: 'ts-loader'
-            }
-          ]
+              loader: 'ts-loader',
+            },
+          ],
         },
-        
+
         {
           test: /\.[jt]s$/,
           use: {
             loader: 'coverage-istanbul-loader',
-            options: { esModules: true }
+            options: { esModules: true },
           },
           enforce: 'post',
           exclude: /node_modules|\.spec\.[tj]s$/,
-        }
-      ]
-    }
-  }
+        },
+      ],
+    },
+  };
+
   const options = {
-    webpackOptions
-  }
-  return  wp(options);
-}
+    webpackOptions,
+  };
+
+  return wp(options);
+};

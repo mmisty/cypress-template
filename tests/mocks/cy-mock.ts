@@ -1,10 +1,9 @@
-
-export const cyMock = ()=> {
+export const cyMock = () => {
   (global as any).cy = {
     window() {
       return {
-        then: (callback: (w:any) => void)=> callback(window),
-      }
-    }
-  }
-}
+        then: (callback: (w: any) => void) => callback(window),
+      };
+    },
+  };
+};
