@@ -16,5 +16,5 @@
     }
   },
 
-  "include": ["src", "node_modules/jest-test-each/dist/index.d.ts"]
+  "include": ["src"]
 }
