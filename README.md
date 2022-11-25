@@ -8,3 +8,4 @@ node 14.15.3
 Troubleshoot
  - Coverage has some incorrect results: 
    -  delete js-files-cypress and rerun
+npm i

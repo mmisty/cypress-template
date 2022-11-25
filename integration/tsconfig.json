@@ -11,7 +11,7 @@
     "baseUrl": "./",
     "paths": {
       "cy-local": ["../src"],
-      "cy-local/*": ["../src/*"],
+      "cy-local/*": ["../src/*"]
     }
   },
 

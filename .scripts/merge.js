@@ -73,6 +73,7 @@ if(!existsSync(outDir)){
 }
 const jestFinal = path.resolve(`${coveragePathJest}/coverage-final.json`);
 const cypressFinal = path.resolve(`${coveragePathCy}/coverage-final.json`);
+const someEmpty = path.resolve(`${coveragePathJest}/coverage-empty.json`);
 
 function fixSourcePaths(coverage) {
   Object.values(coverage).forEach((file) => {
@@ -87,32 +88,36 @@ function fixSourcePaths(coverage) {
   })
 }
 
-function combineCoverage(tempDir, next) {
-  const fileToSave = `${tempDir}/out.json`
+function combineCoverage(tempDir, fileWithCoverage) {
+  const fileToSave = `${tempDir}/combined.json`;
+  
   const coverage = existsSync(fileToSave)
     ? JSON.parse(readFileSync(fileToSave, 'utf8'))
     : {};
+  console.log('Cov previous length:' + JSON.stringify(coverage).length);
   
   fixSourcePaths(coverage)
   
-  const previousCoverage = existsSync(next)
-    ? JSON.parse(readFileSync(next, 'utf8'))
+  const previousCoverage = existsSync(fileWithCoverage)
+    ? JSON.parse(readFileSync(fileWithCoverage, 'utf8'))
     : {}
+  
+  console.log('Cov length:' + JSON.stringify(previousCoverage).length);
   
   const coverageMap = istanbul.createCoverageMap(previousCoverage)
   coverageMap.merge(coverage)
   
   writeFileSync(fileToSave, JSON.stringify(coverageMap, null, 2))
-  console.log('wrote coverage file %s', fileToSave)
+  console.log('wrote coverage file %s\n', fileToSave)
   
   return null
 };
-const tempDir = path.resolve('reports/.nyc_output');
-const cypress = path.resolve(`reports/.nyc_output/out.json`);
-combineCoverage(outDir, cypress);
+// const tempDir = path.resolve('reports/.nyc_output');
+// const cypress = path.resolve(`reports/.nyc_output/out.json`);
+writeFileSync(someEmpty, JSON.stringify({}))
 combineCoverage(outDir, jestFinal);
-combineCoverage(outDir, cypress);
-combineCoverage(outDir, jestFinal);
+combineCoverage(outDir, cypressFinal);
+combineCoverage(outDir, someEmpty);
 
 const nycReportOptions = {
   reportDir: reportDir,
@@ -125,3 +130,35 @@ const nyc = new NYC(nycReportOptions)
 nyc.report().then(()=> {
   console.log("Report created");
 })
+
+/*
+ ======== MERGE COVERAGE REPORTS
+Cov previous length:2
+Cov length:5512
+wrote coverage file /Users/tpitko/dev/cypress-template/reports/coverage-temp/combined.json
+
+Cov previous length:5512
+Cov length:2830
+wrote coverage file /Users/tpitko/dev/cypress-template/reports/coverage-temp/combined.json
+
+Cov previous length:7611
+Cov length:2
+wrote coverage file /Users/tpitko/dev/cypress-template/reports/coverage-temp/combined.json
+
+
+ ======== MERGE COVERAGE REPORTS
+Cov previous length:2
+Cov length:2830
+wrote coverage file /Users/tpitko/dev/cypress-template/reports/coverage-temp/combined.json
+
+Cov previous length:2830
+Cov length:5512
+wrote coverage file /Users/tpitko/dev/cypress-template/reports/coverage-temp/combined.json
+
+Cov previous length:7833
+Cov length:2
+wrote coverage file /Users/tpitko/dev/cypress-template/reports/coverage-temp/combined.json
+
+
+
+ */

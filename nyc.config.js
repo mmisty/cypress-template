@@ -4,11 +4,11 @@ const tempDir = process.env.COVERAGE_TEMP ?? 'reports/.nyc_output';
 module.exports = {
   all: true,
   cache: false,
-  'cache-dir': './reports/.nyc_cache',
+  // 'cache-dir': './reports/.nyc_cache',
   reporter: ['json', 'lcov', 'text'],
   include: ['**/src/**', '**/cypress/**/*.*', '**/*.ts'],
   exclude: ['*.*', 'lib', 'js-files-cypress', 'tests', 'reports', 'cypress/e2e', 'cypress/plugins', 'cypress/*.*'],
-  sourceMap: false,
+  sourceMap: true,
   instrument: false,
   'report-dir': reportDir,
   'temp-dir': tempDir,

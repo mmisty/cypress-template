@@ -7,6 +7,8 @@ describe('empty spec', () => {
   });
 
   it('passes 2', () => {
+    something();
+
     expect(something).not.to.throw();
   });
 });
