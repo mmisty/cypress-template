@@ -1,5 +1,5 @@
 /**
- * This is show case how coverage is being merged
+ * This is showcase how coverage is being merged
  * @param input
  */
 export const checkCov = (input: string) => {

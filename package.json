@@ -1,7 +1,7 @@
 {
-  "name": "jest-cypress-typescript",
+  "name": "cypress-template",
   "version": "1.0.0",
-  "description": "",
+  "description": "cypress template to create cypress libraries with typescript / jest / code coverage",
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -20,11 +20,13 @@
     "cov:report:show": "http-server reports/coverage-full/lcov-report",
     "cov:jest": "http-server reports/coverage-jest/lcov-report",
     "cov:cy": "http-server reports/coverage-cypress/lcov-report",
-    "all": "rm -rf lib reports coverage-nyc .nyc_output && npm run build:all && npm run test:all && npm run report&& npm run cov:report:show"
+    "all": "rm -rf lib js-files-cypress reports coverage-nyc .nyc_output && npm run build:all && npm run test:all && npm run report&& npm run cov:report:show"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
+    "@types/jest": "^29.2.3",
+    "@types/node": "^18.11.9",
     "@cypress/code-coverage": "^3.10.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "coverage-istanbul-loader": "^3.0.5",
@@ -38,9 +40,5 @@
     "tsconfig-paths-webpack-plugin": "^4.0.0",
     "typescript": "^4.9.3",
     "webpack": "^5.75.0"
-  },
-  "devDependencies": {
-    "@types/jest": "^29.2.3",
-    "@types/node": "^18.11.9"
   }
 }
