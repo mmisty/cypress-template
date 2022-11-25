@@ -3,6 +3,18 @@
   "version": "1.0.0",
   "description": "cypress template to create cypress libraries with typescript / jest / code coverage",
   "main": "index.js",
+  "repository": "git@github.com:mmisty/cypress-template.git",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "cypress",
+    "e2e",
+    "tests",
+    "typescript",
+    "template"
+  ],
+  "author": "Taisia Pitko (mmisty) <minydas@yandex.ru>",
   "scripts": {
     "husky:install": "husky install",
     "lint": "eslint --fix '**/*.{ts,tsx,js}'",
@@ -30,8 +42,6 @@
     "prepublishOnly": "npm run pre && npm run extract",
     "postpublish": "npm run extract:undo"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@cypress/code-coverage": "^3.10.0",
     "@ephesoft/webpack.istanbul.loader": "^2.2.0",
