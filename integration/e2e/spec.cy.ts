@@ -6,7 +6,7 @@ describe('empty spec', () => {
     expect(checkCov('cypress')).eq('cypress');
   });
 
-  it('passes 2', () => {
+  it.skip('passes 2', () => {
     something();
 
     expect(something).not.to.throw();

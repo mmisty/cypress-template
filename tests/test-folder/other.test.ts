@@ -5,7 +5,7 @@ import { something } from '../../src';
 import { cyMock } from '../mocks/cy-mock';
 import { consoleMock } from '../mocks/console-mock';
 
-describe.skip('dom', () => {
+describe('dom', () => {
   it('test', () => {
     cyMock();
     const localConsole = consoleMock();

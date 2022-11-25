@@ -8,7 +8,7 @@ export const checkCov = (input: string) => {
       return 'cypress';
     }
 
-    return 'nononreac';
+    return 'non-reachable';
   } else {
     return 'jest';
   }
