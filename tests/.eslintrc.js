@@ -1,15 +1,12 @@
-// cypress configuration
-const original = require('../.eslintrc.js');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const original = require('./../.eslintrc.js');
 
 module.exports = {
   ...original,
   extends: [...original.extends, 'plugin:jest/recommended'],
-  parserOptions: {
-    project: './tsconfig.json',
-  },
   rules: {
     ...original.rules,
-    'class-methods-use-this': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     'jest/no-standalone-expect': 'off',
   },
 };

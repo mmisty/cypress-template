@@ -1,13 +1,23 @@
+# misc
 /.idea
-/node_modules
 .DS_Store
-/dist
-/lib
-/instrumented
-/coverage
+
+# modules
+/node_modules
+
+# built package after `npm pack`
 /package
-/.nyc_output
-/cypress-e2e/videos
-/cypress-e2e/downloads
-/cypress-e2e/screenshots
+
+# cypress
+/integration/videos
+/integration/downloads
+/integration/screenshots
+
+# coverage and test reports
 /reports
+/.nyc_output
+/coverage-nyc
+
+# emitted
+/js-files-cypress
+/lib

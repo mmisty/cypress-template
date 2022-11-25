@@ -1,9 +1,12 @@
 module.exports = {
+  extends: [
+    // 'airbnb-typescript/base',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'eslint-config-prettier',
+  ],
+  // extends: 'standard-with-typescript',
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: './tsconfig.json',
-  },
-  ignorePatterns: ['*.yaml', '*.yml', '*.csv'],
   env: {
     es6: true,
     browser: false,
@@ -11,14 +14,16 @@ module.exports = {
     commonjs: false,
     es2021: true,
   },
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier', 'eslint-config-prettier'],
-  plugins: ['prettier'],
+  plugins: ['prettier', '@typescript-eslint', 'promise'],
+  ignorePatterns: ['*.yaml', '*.yml', '*.csv'],
+
   rules: {
+    '@typescript-eslint/no-explicit-any': 'warn',
+    'prefer-template': 'error',
     quotes: ['error', 'single', { avoidEscape: true }],
-    '@typescript-eslint/no-var-requires': 'off',
-    '@typescript-eslint/consistent-type-definition': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+    '@typescript-eslint/no-var-requires': 'warn',
+    'import/prefer-default-export': 'off',
+    'no-restricted-syntax': ['off', 'ForOfStatement'],
     'prettier/prettier': [
       'error',
       {
@@ -31,6 +36,14 @@ module.exports = {
         arrowParens: 'avoid',
       },
     ],
+    '@typescript-eslint/lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
+    'func-names': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'global-require': 'off',
+    'no-param-reassign': 'off',
+    'no-return-assign': 'off',
+    'no-plusplus': 'off',
     'padding-line-between-statements': [
       'error',
       {

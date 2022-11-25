@@ -1,15 +1,22 @@
 import { defineConfig } from 'cypress';
-import { setupNode } from './cypress-e2e/plugins';
+import { setupPlugins } from './integration/plugins';
+
+const cypressFolder = 'integration';
 
 export default defineConfig({
-  defaultCommandTimeout: 1000,
   e2e: {
-    supportFile: 'cypress-e2e/support/index.ts',
-    specPattern: 'cypress-e2e/tests/**/*.(test|cy).*',
-    setupNodeEvents(on, config) {
-      return setupNode(on, config);
-    },
-
+    specPattern: `${cypressFolder}/e2e/**/*.(cy|test|spec).ts`,
+    supportFile: `${cypressFolder}/support/index.ts`,
+    downloadsFolder: `${cypressFolder}/downloads`,
+    videosFolder: `${cypressFolder}/videos`,
+    fixturesFolder: `${cypressFolder}/fixtures`,
+    screenshotsFolder: `${cypressFolder}/screenshots`,
     video: false,
+
+    setupNodeEvents(on, config) {
+      setupPlugins(on, config);
+
+      return config;
+    },
   },
 });

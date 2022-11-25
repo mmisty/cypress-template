@@ -1,26 +1,20 @@
 {
   "compilerOptions": {
+    "target": "es2016",
     "module": "commonjs",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "es2015",
     "declaration": true,
+    "outDir": "./lib",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
-    "noImplicitAny": false,
-    "moduleResolution": "node",
-    "sourceMap": false,
-    "noResolve": false,
-    "allowJs": true,
-    "outDir": "lib",
-    "types": ["node", "cypress"]
+    "skipLibCheck": true,
+    "types": ["node", "jest", "cypress"],
+    "baseUrl": "./",
+    "paths": {
+      "cy-local": ["./src"],
+      "cy-local/*": ["./src/*"]
+    }
   },
-  "include": ["src"],
-  "exclude": [
-    "src/*.test.ts",
-    "src/**/*.test.ts",
-    "src/tests"
-  ]
+
+  "include": ["src"]
 }

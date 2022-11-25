@@ -1,19 +1,30 @@
-// this is cypress config for coverage
-const group = process.env.CYPRESS_GROUP ? `_${process.env.CYPRESS_GROUP}` : '';
+const reportDir = process.env.COVERAGE_REPORT_DIR ?? 'coverage-nyc';
+const tempDir = process.env.COVERAGE_TEMP ?? 'reports/.nyc_output';
 
 module.exports = {
-  extends: '@istanbuljs/nyc-config-typescript',
   all: true,
-  reporter: ['lcov', 'cobertura', 'json'],
   cache: false,
-  'check-coverage': true,
-  'report-dir': `./reports/coverage-cypress/cypress${group}`,
-  include: ['**/src/'],
-  // types for cypress
-  exclude: ['*.types.ts', 'types.ts'],
-  'temp-dir': `./reports/coverage-cypress-temp/.nyc_output_cypress${group}`,
+  reporter: ['json', 'lcov', 'text'],
+  include: ['**/src/**', '**/cypress/**/*.*', '**/*.ts'],
+  exclude: [
+    '*.*',
+    'lib',
+    'js-files-cypress',
+    'tests',
+    'reports',
+    'cypress/e2e',
+    'cypress/plugins',
+    'cypress/*.*',
+    'src/cypress',
+    '*.types.ts',
+    'types.ts',
+  ],
+  sourceMap: false,
+  instrument: false,
+  'report-dir': reportDir,
+  'temp-dir': tempDir,
   branches: 80,
-  lines: 80,
-  functions: 80,
-  statements: 90,
+  lines: 60,
+  functions: 60,
+  statements: 80,
 };
