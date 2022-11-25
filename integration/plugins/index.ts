@@ -1,10 +1,10 @@
-// do not change to cy-local (only in tests, not plugins)
-import { myPlugin } from '../../src/plugin';
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
 import { preprocessor } from './ts-preprocessor';
 import { existsSync, rmdirSync } from 'fs';
 import { resolve } from 'path';
+import { COVERAGE } from '../common/constants';
+import { configureEnv } from 'cy-local/plugins';
 
 /**
  * Clear compiled js files from previous runs, otherwise coverage will be messed up
@@ -18,12 +18,28 @@ const clearJsFiles = () => {
   }
 };
 
+const isCoverage = (config: PluginConfigOptions) => {
+  return process.env[COVERAGE] || config.env[COVERAGE];
+};
+
 export const setupPlugins = (on: PluginEvents, config: PluginConfigOptions) => {
   clearJsFiles();
-  myPlugin(on, config);
+  const isCov = isCoverage(config);
 
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  require('@cypress/code-coverage/task')(on, config);
+  if (isCov) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('@cypress/code-coverage/task')(on, config);
+    config.env[COVERAGE] = true;
+  }
 
-  on('file:preprocessor', preprocessor());
+  on('file:preprocessor', preprocessor(isCov));
+
+  configureEnv(on, config);
+
+  console.log('CYPRESS ENV:');
+  console.log(config.env);
+
+  // It's IMPORTANT to return the config object
+  // with any changed environment variables
+  return config;
 };

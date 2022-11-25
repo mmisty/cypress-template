@@ -1,21 +1,13 @@
-// ***********************************************************
-// This example support/e2e.ts is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
+import { myPluginSetup } from 'cy-local';
+import { COVERAGE } from '../common/constants';
 
-// Import commands.js using ES2015 syntax:
-// import './commands'
-
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
-import '@cypress/code-coverage/support';
+const setupCoverage = () => {
+  if (Cypress.env(COVERAGE) === 'true' || Cypress.env(COVERAGE) === true) {
+    console.log('ENABLE COV');
+    require('@cypress/code-coverage/support');
+  } else {
+    console.log('COVERAGE NOT ENABLED IN BROWSER');
+  }
+};
+setupCoverage();
+myPluginSetup();

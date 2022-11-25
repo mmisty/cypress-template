@@ -10,7 +10,7 @@
     "test:cov": "jest --coverage --coverageDirectory reports/coverage-jest",
     "cy": "$(npm bin)/cypress",
     "cy:open": "npm run cy -- open",
-    "cy:run": "npm run cy -- run ",
+    "cy:run": "npm run cy -- run --browser chrome --headless",
     "cy:run:cov": "COVERAGE_REPORT_DIR=reports/coverage-cypress COVERAGE=true npm run cy -- run",
     "build": "tsc",
     "build:tests": "cd tests && tsc",
@@ -25,7 +25,9 @@
     "all": "npm run pre && npm run cov:check && npm run cov",
     "pre": "rm -rf ./node_modules/.cache lib reports coverage-nyc .nyc_output && npm run lint && npm run build:all && npm run test:all && npm run cov:merge",
     "extract": "node .scripts/extract.js  --source lib --target . --package package.json",
-    "extract:undo": "npm run extract -- --undo"
+    "extract:undo": "npm run extract -- --undo",
+    "prepublishOnly": "npm run pre && npm run extract",
+    "postpublish": "npm run extract:undo"
   },
   "author": "",
   "license": "ISC",
