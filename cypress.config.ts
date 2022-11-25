@@ -1,15 +1,18 @@
-import { defineConfig } from 'cypress';
-import { setupNode } from './cypress-e2e/plugins';
+import { defineConfig } from "cypress";
+import {myPlugin} from "./src/plugin";
 
 export default defineConfig({
-  defaultCommandTimeout: 1000,
   e2e: {
-    supportFile: 'cypress-e2e/support/index.ts',
-    specPattern: 'cypress-e2e/tests/**/*.(test|cy).*',
-    setupNodeEvents(on, config) {
-      return setupNode(on, config);
-    },
-
     video: false,
+    setupNodeEvents(on, config) {
+      myPlugin(on, config);
+      
+      require('@cypress/code-coverage/task')(on, config);
+      //on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
+      on('file:preprocessor', require('./cypress/plugins/ts-preproc'))
+      
+      
+      return config
+    },
   },
 });

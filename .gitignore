@@ -4,7 +4,7 @@
 /dist
 /lib
 /instrumented
-/coverage
+/jest-coverage
 /package
 /.nyc_output
 /cypress-e2e/videos
