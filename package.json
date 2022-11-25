@@ -12,6 +12,7 @@
     "cy:open": "npm run cy -- open",
     "cy:run": "npm run cy -- run --browser chrome --headless",
     "cy:run:cov": "COVERAGE_REPORT_DIR=reports/coverage-cypress COVERAGE=true npm run cy -- run",
+    "cy:open:cov": "COVERAGE_REPORT_DIR=reports/coverage-cypress COVERAGE=true npm run cy -- open",
     "build": "tsc",
     "build:tests": "cd tests && tsc",
     "build:cy": "cd integration && tsc",
