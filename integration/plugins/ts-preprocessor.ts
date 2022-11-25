@@ -27,7 +27,7 @@ export const preprocessor = ()=> {
         {
           test: /\.[jt]s$/,
           use: {
-            loader: 'istanbul-instrumenter-loader',
+            loader: 'coverage-istanbul-loader',
             options: { esModules: true }
           },
           enforce: 'post',
