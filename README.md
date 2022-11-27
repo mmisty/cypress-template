@@ -1,16 +1,14 @@
-# cypress-template
+# `Your library name`
 
-Template to create cypress library with jest tests, correct package structure,
-coverage connected to cypress and merging coverage for jest and cypress
-
-- [x] typescript
-- [x] code coverage for cypress and jest, merge coverage
-- [x] formatting and eslint
-- [x] jest tests
-- [x] proper extraction
+Library description
 
 
-Scripts
+
+## Contribution
+To contribute install precommit hooks by `npm run husky:install`. It will
+install git pre-commit hooks - will be located in `.husky` folder
+
+### Scripts
 
 | script          | description                                                                                                                                                 |
 |-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -31,3 +29,6 @@ Scripts
 | `pre`           | run all necessary scripts  (fmt, lint, build, tests and check cov)                                                                                          |
 | `extract`       | should be run after tsc and after everything is staged. Extracts everything from 'lib' to root directory. This is required for nice imports in target library |
 | `extract:undo`  | Be careful, commit everything you need before. Removes files and dirs that were extracted after `extract`                                                     |
+
+
+

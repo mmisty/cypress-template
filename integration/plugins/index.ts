@@ -34,6 +34,7 @@ export const setupPlugins = (on: PluginEvents, config: PluginConfigOptions) => {
 
   on('file:preprocessor', preprocessor(isCov));
 
+  // HERE you put your plugin functions
   configureEnv(on, config);
 
   console.log('CYPRESS ENV:');
