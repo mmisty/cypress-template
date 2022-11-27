@@ -4,6 +4,7 @@
   "description": "cypress template to create cypress libraries with typescript / jest / code coverage",
   "main": "index.js",
   "repository": "git@github.com:mmisty/cypress-template.git",
+  "homepage": "https://github.com/mmisty/cypress-template#readme.package",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -20,7 +21,7 @@
     "lint": "eslint --fix '**/*.{ts,tsx,js}'",
     "test": "jest",
     "test:cov": "jest --coverage --coverageDirectory reports/coverage-jest",
-    "cy": "$(npm bin)/cypress",
+    "cy": "cypress",
     "cy:open": "npm run cy -- open",
     "cy:run": "npm run cy -- run --browser chrome --headless",
     "cy:run:cov": "COVERAGE_REPORT_DIR=reports/coverage-cypress COVERAGE=true npm run cy -- run",
@@ -40,7 +41,8 @@
     "extract": "node .scripts/extract.js  --source lib --target . --package package.json",
     "extract:undo": "npm run extract -- --undo",
     "prepublishOnly": "npm run pre && npm run extract",
-    "postpublish": "npm run extract:undo"
+    "postpublish": "npm run extract:undo",
+    "try:pack": "npm run prepublishOnly && npm pack && npm run postpublish"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.10.0",
