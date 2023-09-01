@@ -32,17 +32,22 @@
     "build:all": "npm run build && npm run build:cy && npm run build:tests",
     "test:all": "npm run test:cov && npm run cy:run:cov",
     "cov:merge": "node ./.scripts/merge.js --cypress reports/coverage-cypress --jest reports/coverage-jest --out reports/coverage-temp --report reports/coverage-full",
+    "cov:fin": "echo 'this applies nyc config to report' && npx nyc report -t reports/coverage-full --report-dir reports/coverage-full-total",
     "cov": "http-server reports/coverage-full/lcov-report",
     "cov:jest": "http-server reports/coverage-jest/lcov-report",
     "cov:cy": "http-server reports/coverage-cypress/lcov-report",
     "cov:check": "COVERAGE_TEMP=reports/coverage-temp nyc check-coverage",
     "all": "npm run pre && npm run cov:check && npm run cov",
     "pre": "rm -rf ./node_modules/.cache lib reports coverage-nyc .nyc_output && npm run lint && npm run build:all && npm run test:all && npm run cov:merge",
-    "extract": "node .scripts/extract.js  --source lib --target . --package package.json",
-    "extract:undo": "npm run extract -- --undo",
-    "prepublishOnly": "npm run pre && npm run extract",
-    "postpublish": "npm run extract:undo",
-    "try:pack": "npm run prepublishOnly && npm pack && npm run postpublish"
+    "prepublishOnly": "{ echo \"Run script 'npm run publish:pack', 'npm run publish:minor', etc from package.json\n\"; exit 1; }",
+    "postpublish": "git tag v$ver",
+    "pack": "npm run build && cp package.json ./lib/package.json && cp README.pack.md ./lib/README.md && cp CHANGELOG.md ./lib/CHANGELOG.md && sh .scripts/remove.sh && cd lib && npm version $ver --no-git-tag-version ",
+    "prepublish": "npm run lint",
+    "publishPack": "npm run pack && cd lib && npm publish",
+    "publish:patch": "export ver=$(semver $(npm show . version) --increment -i patch) && npm run publishPack && npm run postpublish",
+    "publish:minor": "export ver=$(semver $(npm show . version) --increment -i minor) && npm run publishPack && npm run postpublish",
+    "publish:major": "export ver=$(semver $(npm show . version) --increment -i major) && npm run publishPack && npm run postpublish",
+    "publish:pack": "export ver=\"0.0.2-alpha-2\" && npm run publishPack && npm run postpublish"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.10.0",
@@ -52,7 +57,7 @@
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
-    "cypress": "^11.2.0",
+    "cypress": "^13.0.0",
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
@@ -66,11 +71,12 @@
     "jest-environment-jsdom": "^29.3.1",
     "jest-test-each": "^0.9.1",
     "nyc": "^15.1.0",
+    "semver": "^7.5.4",
     "ts-jest": "^29.0.3",
     "ts-loader": "^9.4.1",
     "ts-node": "^10.9.1",
     "tsconfig-paths-webpack-plugin": "^4.0.0",
     "typescript": "^4.9.3",
-    "webpack": "^5.75.0"
+    "webpack": "^5.88.2"
   }
 }
