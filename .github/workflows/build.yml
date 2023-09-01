@@ -92,6 +92,13 @@ jobs:
           npm run publish:patch
           git push --tags
           exit 0
+        fi 
+        
+        if [[ "$gitmsg" =~ "[fix]" ]]; then
+          echo "publish patch"
+          npm run publish:patch
+          git push --tags
+          exit 0
         fi
         
         if [[ "$gitmsg" =~ "[minor]" ]]; then
@@ -108,6 +115,6 @@ jobs:
           exit 0
         fi
         
-        echo "publishing alpha, for other commit message should contain [minor], [major] or [patch]"
+        echo "publishing alpha, for other commit message should contain [minor], [major] or [patch]/[fix]"
         npm run publish:alpha
         git push --tags
