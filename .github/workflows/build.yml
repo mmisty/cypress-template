@@ -52,9 +52,9 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
-        branch=$(git rev-parse --abbrev-ref HEAD)
+        branch=${{ github.ref }}
         # ${{ github.ref }}
-        if [[ ! "$msg" =~ "main" ]]; then
+        if [[ ! "$branch" =~ "main" ]]; then
           echo "no publishing for not main branch"
           exit(0)
         fi
