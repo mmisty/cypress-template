@@ -11,6 +11,11 @@ export default defineConfig({
     videosFolder: `${cypressFolder}/videos`,
     fixturesFolder: `${cypressFolder}/fixtures`,
     screenshotsFolder: `${cypressFolder}/screenshots`,
+    reporter: 'junit',
+    reporterOptions: {
+      mochaFile: './reports/cypress/[hash].xml',
+      toConsole: false,
+    },
     video: false,
 
     setupNodeEvents(on, config) {
