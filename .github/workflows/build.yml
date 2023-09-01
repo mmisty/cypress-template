@@ -49,11 +49,16 @@ jobs:
         coverage_path: "reports/coverage-full-total/clover.xml"
 
     - name: Publish
-      branches:
-        - main
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
+        branch=$(git rev-parse --abbrev-ref HEAD)
+        # ${{ github.ref }}
+        if [[ ! "$msg" =~ "main" ]]; then
+          echo "no publishing for not main branch"
+          exit(0)
+        fi
+        
         msg=$(git log -1 --pretty=%B)
         echo $msg
         
