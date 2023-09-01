@@ -62,28 +62,34 @@ jobs:
         branch=${{ github.ref }}
         echo "Branch: $branch" 
         
+        msg2=${{ github.event.commits[0].message }}
         msg=${{ github.event.head_commit.message }}
         echo "Commit: $msg" 
+        echo "Commit: $msg2" 
         
         if [[ "$msg" =~ "[patch]" ]]; then
           echo "publish patch"
           npm run publish:patch
+          git push --tags
           exit 0
         fi
         
         if [[ "$msg" =~ "[minor]" ]]; then
           echo "publish minor"
           npm run publish:minor
+          git push --tags
           exit 0
         fi
         
         if [[ "$msg" =~ "[major]" ]]; then
           echo "publish major"
           npm run publish:major
+          git push --tags
           exit 0
         fi
         
-        npm run publish:patch
+        npm run publish:alpha
+        git push --tags
       
         echo "no publishing, commit message should contain [minor], [major] or [patch]"
         

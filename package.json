@@ -44,6 +44,7 @@
     "pack": "npm run build && cp package.json ./lib/package.json && cp README.pack.md ./lib/README.md && cp CHANGELOG.md ./lib/CHANGELOG.md && sh .scripts/remove.sh && cd lib && npm version $ver --no-git-tag-version ",
     "prepublish": "npm run lint",
     "publishPack": "npm run pack && cd lib && npm publish",
+    "publish:alpha": "export ver=$(semver $(npm show . version) --increment -i prerelease  --preid 'alpha') && npm run publishPack && npm run postpublish",
     "publish:patch": "export ver=$(semver $(npm show . version) --increment -i patch) && npm run publishPack && npm run postpublish",
     "publish:minor": "export ver=$(semver $(npm show . version) --increment -i minor) && npm run publishPack && npm run postpublish",
     "publish:major": "export ver=$(semver $(npm show . version) --increment -i major) && npm run publishPack && npm run postpublish",
