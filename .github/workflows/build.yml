@@ -70,15 +70,17 @@ jobs:
     - name: Publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        commitmsg: ${{ github.event.head_commit.message }}
       run: |
+        # if: github.ref == 'refs/heads/main'
         branch=${{ github.ref }}
         echo "Branch: $branch" 
         
-        gitmsg=$(git log -1 --pretty=%B)
         msg2=${{ github.event.commits[0].message }}
         msg=${{ github.event.head_commit.message }}
         echo "Commit: $msg" 
         echo "Commit2: $msg2" 
+        gitmsg=${{ env.commitmsg }}
         echo "gitmsg: $gitmsg" 
         
         if [[ "$gitmsg" =~ "[patch]" ]]; then
