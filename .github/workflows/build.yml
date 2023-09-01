@@ -18,6 +18,7 @@ jobs:
         node-version: '18.x'
         registry-url: 'https://registry.npmjs.org'
 
+    - uses: volta-cli/action@v4
     - name: Install
       run: npm ci
         
@@ -52,11 +53,10 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
-        branch=${{ github.ref }}
-        # ${{ github.ref }}
+        branch=$(git rev-parse --abbrev-ref HEAD)
         if [[ ! "$branch" =~ "main" ]]; then
           echo "no publishing for not main branch"
-          exit(0)
+          exit 0
         fi
         
         msg=$(git log -1 --pretty=%B)
@@ -65,19 +65,19 @@ jobs:
         if [[ "$msg" =~ "[patch]" ]]; then
           echo "publish patch"
           npm run publish:patch
-          exit(0)
+          exit 0
         fi
         
         if [[ "$msg" =~ "[minor]" ]]; then
           echo "publish minor"
           npm run publish:minor
-          exit(0)
+          exit 0
         fi
         
         if [[ "$msg" =~ "[major]" ]]; then
           echo "publish major"
           npm run publish:major
-          exit(0)
+          exit 0
         fi
         
         echo "no publishing, commit message should contain [minor], [major] or [patch]"
