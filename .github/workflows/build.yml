@@ -54,8 +54,11 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         coverage_path: "reports/coverage-full-total/clover.xml"
 
+    - name: Logging
+      run: |
+        echo "${{toJSON(github.event)}}"
+        
     - name: Publish
-
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
