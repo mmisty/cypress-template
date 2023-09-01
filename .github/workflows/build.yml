@@ -78,21 +78,12 @@ jobs:
     - name: Publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        commitmsg: ${{ github.event.head_commit.message }}
       run: |
         branch=${{ github.ref }}
         echo "Branch: $branch" 
 
-        msg2="${{ github.event.commits[0].message }}"
-        prTitle="${{ github.event.pull_request.title }}"
-        msg="${{ github.event.head_commit.message }}"
-        echo "Commit: $msg" 
-        echo "Commit2: $msg2" 
-        echo "prTitle: $prTitle" 
-
-        gitmsg=${{ env.commitmsg }}
-
-        echo "gitmsg: $gitmsg" 
+        gitmsg="${{ github.event.commits[0].message }}"
+        echo "Commit: $gitmsg" 
         
         if [[ "$gitmsg" =~ "[patch]" ]]; then
           echo "publish patch"
