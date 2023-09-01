@@ -84,9 +84,11 @@ jobs:
         echo "Branch: $branch" 
 
         msg2=${{ github.event.commits[0].message }}
+        prTitle=${{ github.event.pull_request.title }}
         msg=${{ github.event.head_commit.message }}
         echo "Commit: $msg" 
         echo "Commit2: $msg2" 
+        echo "prTitle: $prTitle" 
 
         gitmsg=${{ env.commitmsg }}
 
