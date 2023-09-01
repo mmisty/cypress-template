@@ -59,10 +59,10 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
-        branch=$(git rev-parse --abbrev-ref HEAD)
+        branch=${{ github.ref }}
         echo "Branch: $branch" 
         
-        msg=$(git log -1 --pretty=%B)
+        msg=${{ github.event.head_commit.message }}
         echo "Commit: $msg" 
         
         if [[ "$msg" =~ "[patch]" ]]; then
