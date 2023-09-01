@@ -79,6 +79,7 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
+        # test
         branch=${{ github.ref }}
         echo "Branch: $branch" 
 
