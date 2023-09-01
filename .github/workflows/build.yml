@@ -78,10 +78,8 @@ jobs:
     - name: Publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
         commitmsg: ${{ github.event.head_commit.message }}
       run: |
-        # if: github.ref == 'refs/heads/main'
         branch=${{ github.ref }}
         echo "Branch: $branch" 
 
