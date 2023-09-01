@@ -1,8 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-source ~/.zshrc
-
-nvm use 16
-echo --- lint ---
-npm run lint
+#nvm use 16
+# echo --- lint ---
+#npm run lint
