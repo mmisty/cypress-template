@@ -1,4 +1,5 @@
 name: NodeJS with Webpack
+permissions: write-all
 
 on:
   push:
@@ -57,7 +58,7 @@ jobs:
     - name: Logging
       run: |
         echo "${{toJSON(github.event)}}"
-        
+
     - name: Publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
